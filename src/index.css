@@ -66,6 +66,10 @@ h2 {
 	cursor: pointer;
 }
 
+.clicked {
+	color: #00ff00;
+}
+
 .btn-large {
 	display: block;
 	width: 100%;
@@ -79,7 +83,7 @@ h2 {
 }
 
 .alert {
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  margin-top: 0.5rem
+	text-transform: uppercase;
+	font-size: 0.85rem;
+	margin-top: 0.5rem;
 }

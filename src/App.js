@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import { FaClipboard } from 'react-icons/fa';
+import { FaClipboard, FaCheck } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 	const [password, setPassword] = useState('');
-	const [isgenerated, setIsGenerated] = useState(false);
-	const [length, setLength] = useState(4);
-	const [isError, setIsError] = useState(false);
 	const [attributes, setAttributes] = useState({
 		upperCase: true,
 		lowerCase: true,
 		numbers: true,
 		symbols: true,
 	});
+	const [isgenerated, setIsGenerated] = useState(false);
+	const [length, setLength] = useState(4);
+	const [isError, setIsError] = useState(false);
+	const [clipboard, setClipboard] = useState(false);
 	// toastify functions
-	const clipboard = () => toast('Copied to clipboard');
 	const choiceError = () => toast('Please select atleast one choice');
 	const lengthError = () =>
 		toast(`Password length is not between 4 and 20 characters`);
@@ -84,6 +84,16 @@ function App() {
 		passwordGenerated();
 	};
 
+	const copyToClipboard = () => {
+		const clipboardEl = document.getElementById('clipboard');
+		clipboardEl.classList.add('clicked');
+		setClipboard(true);
+		setTimeout(() => {
+			clipboardEl.classList.remove('clicked');
+			setClipboard(false);
+		}, 2000);
+	};
+
 	return (
 		<>
 			<main>
@@ -97,24 +107,11 @@ function App() {
 								id="clipboard"
 								onClick={() => {
 									navigator.clipboard.writeText(password);
-									setPassword('');
-									clipboard();
+									copyToClipboard();
 								}}
 							>
-								<FaClipboard />
+								{clipboard ? <FaCheck /> : <FaClipboard />}
 							</button>
-							<ToastContainer
-								position="bottom-center"
-								autoClose={3000}
-								hideProgressBar={false}
-								newestOnTop
-								closeOnClick
-								rtl={false}
-								pauseOnFocusLoss
-								draggable
-								pauseOnHover
-								theme="dark"
-							/>
 						</div>
 					)}
 					<div className="settings">
@@ -174,7 +171,7 @@ function App() {
 						Generate password
 					</button>
 					<ToastContainer
-						position="bottom-center"
+						position="bottom-right"
 						autoClose={2000}
 						hideProgressBar={false}
 						newestOnTop
